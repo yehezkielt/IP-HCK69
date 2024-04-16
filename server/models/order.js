@@ -11,12 +11,39 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Order.belongsTo(models.Shoes, {foreignkeys: "ShoesId"})
+      Order.belongsTo(models.User, {foreignkeys: "UserId"})
     }
   }
   Order.init({
-    UserId: DataTypes.INTEGER,
-    ShoesId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER
+    UserId: {
+        type: DataTypes.INTEGER,
+        allowNull : false,
+        validate : {
+            notNull : {
+                msg: "UserId is required"
+            },
+            notEmpty : {
+                msg: 'UserId is required'
+            }
+        }
+    },
+    ShoesId: {
+        type: DataTypes.INTEGER,
+        allowNull : false,
+        validate : {
+            notNull : {
+                msg: "ShoesId is required"
+            },
+            notEmpty : {
+                msg: 'ShoesId is required'
+            }
+        }
+    },
+    quantity: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    }
   }, {
     sequelize,
     modelName: 'Order',
