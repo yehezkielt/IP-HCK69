@@ -24,16 +24,16 @@ export default function LoginPage() {
 
   useEffect(() => {
     window.onload = function () {
-      google.accounts.id.initialize({
+      window.google.accounts.id.initialize({
         client_id:
           "514715861586-t9e35q3vd2e6nh2r33jra94uhtp8vn3s.apps.googleusercontent.com",
         callback: handleCredentialResponse,
       });
-      google.accounts.id.renderButton(
+      window.google.accounts.id.renderButton(
         document.getElementById("buttonDiv"),
         { theme: "outline", size: "large" } // customization attributes
       );
-      google.accounts.id.prompt(); // also display the One Tap dialog
+      window.google.accounts.id.prompt(); // also display the One Tap dialog
     };
   }, []);
 

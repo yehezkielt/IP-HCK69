@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Shoes", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      username: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING,
         validate: {
@@ -17,34 +17,7 @@ module.exports = {
           notEmpty: true,
         },
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-          isEmail: true,
-        },
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-      },
-      role: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-        defaultValue: "staff",
-      },
-      phoneNumber: {
+      price: {
         allowNull: false,
         type: Sequelize.STRING,
         validate: {
@@ -52,12 +25,44 @@ module.exports = {
           notEmpty: true,
         },
       },
-      address: {
+      img: {
         allowNull: false,
         type: Sequelize.STRING,
         validate: {
           notNull: true,
           notEmpty: true,
+        },
+      },
+      quantity: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      UserId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
+      CategoryId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+        references: {
+          model: "Categories",
+          key: "id",
         },
       },
       createdAt: {
@@ -71,6 +76,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Shoes");
   },
 };

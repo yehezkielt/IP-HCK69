@@ -12,15 +12,18 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    const dataUser = require("../data/user.json");
-    //    console.log(dataUser);
-    dataUser.map((el) => {
-      delete el.id;
-      el.createdAt = new Date();
-      el.updatedAt = new Date();
-      return el;
-    });
-    await queryInterface.bulkInsert("Users", dataUser, {});
+    await queryInterface.bulkInsert("Categories", [
+      {
+        name: "sneakers",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: "loafers",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ], {});
   },
 
   async down(queryInterface, Sequelize) {
@@ -30,6 +33,5 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("Users", null, {});
   },
 };
