@@ -1,7 +1,7 @@
 const errorHandler = (err, req, res, next) => {
     switch (err.name) {
         case "SequelizeUniqueConstraintError":
-            res.status(400).json({message: err.errors[0].message})
+            res.status(400).json({message: "Email already exist"})
             break;
         case "SequelizeValidationError":
             res.status(400).json({message: err.errors[0].message})

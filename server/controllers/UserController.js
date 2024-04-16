@@ -2,16 +2,42 @@ const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client();
 const {User} = require("../models");
 const { signToken } = require('../helpers/jwt');
+const { hashPassword, comparePassword } = require("../helpers/bcrypt")
 
 class UserController {
 
-    
+    static async register (req, res,  next) {
+        try {
+            const {username, email, password, phoneNumber, address } = req.body
+            await User.create( {username, email, password: hashPassword(password), phoneNumber, address }) 
+            res.status(201).json({message: "User has successfully created"})
+        } catch (error) {
+            next(error)
+            console.log(error);
+        }
+    }
+    static async login (req, res, next) {
+       try {
+            const {email, password} = req.body
+            if(!email) throw {name: "EmailRequired"}
+            if(!password) throw {name: "PasswordRequired"}
+            const checkEmail = await User.findOne({where : {email}})
+            if(!checkEmail) throw {name: "InvalidLogin"}
+            const checkPassword = comparePassword(password, checkEmail.password)
+            if(!checkPassword) throw {name: "InvalidLogin"}
+            const payload = {id: checkEmail.id}
+            const access_token = signToken(payload)
+            res.status(200).json({message: "successfully login", access_token: access_token})
+       } catch (error) {
+            next(error)
+       }
+    }
     static async googleLogin(req, res, next) {
         try {
             const {google_token} = req.headers
             const ticket = await client.verifyIdToken({
                 idToken: google_token,
-                audience: "514715861586-t9e35q3vd2e6nh2r33jra94uhtp8vn3s.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
+                audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
                 // Or, if multiple clients access the backend:
                 //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
             });
