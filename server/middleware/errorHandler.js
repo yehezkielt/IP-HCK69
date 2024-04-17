@@ -27,6 +27,9 @@ const errorHandler = (err, req, res, next) => {
         case "file_empty":
 			res.status(400).json({ msg: "Please insert your file" });
 			break;
+        case "id_not_found":
+            res.status(404).json({ msg: "Data not found" });
+            break;
         case "Forbidden":
             res.status(403).json({message: "Forbidden"})
             break;
