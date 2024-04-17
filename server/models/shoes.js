@@ -74,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "quantity is required",
           },
         },
+        defaultValue: 1,
       },
       size: {
         type: DataTypes.INTEGER,
@@ -86,6 +87,7 @@ module.exports = (sequelize, DataTypes) => {
             msg: "size is required",
           },
         },
+        defaultValue: 41,
       },
       UserId: {
         type: DataTypes.INTEGER,
