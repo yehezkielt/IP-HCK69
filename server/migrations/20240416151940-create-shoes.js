@@ -25,9 +25,17 @@ module.exports = {
           notEmpty: true,
         },
       },
-      img: {
+      image: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT,
         validate: {
           notNull: true,
           notEmpty: true,
@@ -35,7 +43,15 @@ module.exports = {
       },
       quantity: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      size: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
         validate: {
           notNull: true,
           notEmpty: true,

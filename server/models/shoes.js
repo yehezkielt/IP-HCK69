@@ -39,15 +39,27 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      img: {
-        type: DataTypes.STRING,
+      image: {
+        type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notNull: {
-            msg: "img is required",
+            msg: "image is required",
           },
           notEmpty: {
-            msg: "img is required",
+            msg: "image is required",
+          },
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "description is required",
+          },
+          notEmpty: {
+            msg: "description is required",
           },
         },
       },
@@ -60,6 +72,18 @@ module.exports = (sequelize, DataTypes) => {
           },
           notEmpty: {
             msg: "quantity is required",
+          },
+        },
+      },
+      size: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "size is required",
+          },
+          notEmpty: {
+            msg: "size is required",
           },
         },
       },

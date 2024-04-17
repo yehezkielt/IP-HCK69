@@ -6,10 +6,10 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const options = {
       method: "GET",
-      url: "https://jordan-shoes.p.rapidapi.com/shoes",
+      url: "https://shoes-collections.p.rapidapi.com/shoes",
       headers: {
         "X-RapidAPI-Key": "bbeadb5803msh04404af31a786e9p137841jsn9370c02098e0",
-        "X-RapidAPI-Host": "jordan-shoes.p.rapidapi.com",
+        "X-RapidAPI-Host": "shoes-collections.p.rapidapi.com",
       },
     };
 
@@ -19,8 +19,10 @@ module.exports = {
       return {
         name: el.name,
         price: el.price,
-        img: el.img,
-        quantity: el.quantity,
+        image: el.image,
+        description: el.description,
+        quantity: 1,
+        size: 41,
         UserId: 1,
         CategoryId: 1,
         createdAt: new Date(),

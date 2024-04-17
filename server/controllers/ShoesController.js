@@ -1,5 +1,6 @@
 const { Op } = require("sequelize")
-const { Shoes, Category } = require("../models") 
+const { Shoes, Category, User } = require("../models") 
+const midtransClient = require('midtrans-client');
 
 class ShoesController {
     // PUBLIC SITE
@@ -59,6 +60,42 @@ class ShoesController {
 			next(error);
 		}
 	}
+    static async MidtransToken(req, res, next) {
+        
+        try {
+
+            const user = await User.findByPk(req.user.id)
+            
+
+            let snap = new midtransClient.Snap({
+                // Set to true if you want Production Environment (accept real transaction).
+                isProduction : false,
+                serverKey : process.env.SERVER_KEY,
+            });
+
+            let parameter = {
+                "transaction_details": {
+                    "order_id": "YOUR-ORDERID-" + Math.random() * 100,
+                    "gross_amount": 10000
+                },
+                "credit_card":{
+                    "secure" : true
+                },
+                "customer_details": {
+                    
+                    "email": user.email,
+                    
+                }
+            };
+
+           const midtransToken = await snap.createTransaction(parameter)
+            res.status(201).json({midtransToken})
+
+
+        } catch (error) {
+            next(error)
+        }
+    }
     
 }
 
