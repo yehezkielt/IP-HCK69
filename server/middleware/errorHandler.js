@@ -24,6 +24,9 @@ const errorHandler = (err, req, res, next) => {
         case "ImageIsRequired":
             res.status(401).json({message: "ImageUrl validation error"})
             break;
+        case "file_empty":
+			res.status(400).json({ msg: "Please insert your file" });
+			break;
         case "Forbidden":
             res.status(403).json({message: "Forbidden"})
             break;
