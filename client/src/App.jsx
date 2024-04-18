@@ -1,41 +1,70 @@
-import { useSelector, useDispatch } from "react-redux";
-import LoginPage from "./pages/LoginPage.jsx"
-
+import "./App.css";
 import {
-  increment,
-  decrement,
-  incrementByAmount,
-} from "./features/counter/counterSlice.js";
+	createBrowserRouter,
+	redirect,
+	RouterProvider,
+} from "react-router-dom";
+import Home_Page from "./views/home_page";
+import Shoes from "./views/shoes";
+import MainLayout from "./component/mainLayout";
+import Form_Data from "./views/form_data";
+import Public from "./views/public";
 
-import {
-    createBrowserRouter,
-    RouterProvider,
-  } from "react-router-dom";
+const router = createBrowserRouter([
+	{
+		element: <MainLayout />,
+		loader: () => {
+			if (localStorage.access_token) {
+				return null;
+			}
+			return redirect("/");
+		},
+		children: [
+			{
+				path: "/home",
+				element: <Home_Page />,
+			},
+			{
+				path: "/home/:id",
+				element: <Home_Page />,
+			},
+			{
+				path: "/shoes",
+				element: <Shoes />,
+			},
+			{
+				path: "/shoes/:id",
+				element: <Shoes />,
+			},
+			{
+				path: "/form",
+				element: <Form_Data />,
+			},
+			{
+				path: "/form/:id",
+				element: <Form_Data />,
+			},
+		],
+	},
+	{
+		element: <MainLayout />,
+		children: [
+			{
+				path: "/",
+				element: <Public />,
+				loader: () => {
+					if (localStorage.access_token) {
+						return redirect("/home");
+					}
+					return null;
+				},
+			},
+		],
+	},
+]);
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LoginPage/>,
-    },
-  ]);
-
-export default function App() {
-  const counter = useSelector((store) => store.counter.value);
-
-  const dispatch = useDispatch();
-
-  return (
-    <>
-    
-      <RouterProvider router={router} />
-    <div>
-      <h4>Global Counter : {counter} </h4>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(incrementByAmount(2))}>
-        Increment by 2
-      </button>
-    </div>
-    </>
-  );
+function App() {
+	return <RouterProvider router={router} />
 }
+
+export default App;
