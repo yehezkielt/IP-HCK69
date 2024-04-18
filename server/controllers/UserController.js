@@ -27,6 +27,7 @@ class UserController {
             if(!checkPassword) throw {name: "InvalidLogin"}
             const payload = {id: checkEmail.id}
             const access_token = signToken(payload)
+            // console.log(access_token);
             res.status(200).json({message: "successfully login", access_token: access_token})
        } catch (error) {
             next(error)
