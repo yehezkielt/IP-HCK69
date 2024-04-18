@@ -14,7 +14,7 @@ export default function Public() {
     // Function to fetch public shoes
     const fetchPubShoes = async (params) => {
         try {
-            const response = await axios.get(BASE_URL + "/shoes/public", { params });
+            const response = await axios.get(BASE_URL + "/pub-shoes", { params });
             setPubShoes(response.data);
         } catch (error) {
             console.error("Error fetching public shoes:", error);
@@ -33,7 +33,7 @@ export default function Public() {
     }, [id]);
 
     // Function to handle payment
-    const Payment = async () => {
+    const Payment = async (id) => {
         try {
             const { data } = await axios({
                 method: "post",
@@ -48,7 +48,7 @@ export default function Public() {
         } catch (error) {
             Swal.fire({
                 icon: "error",
-                title: error.response.data.msg,
+                title: error.response.data.message,
             });
         }
     };

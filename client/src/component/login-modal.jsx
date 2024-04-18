@@ -38,7 +38,7 @@ export default function Form_Login() {
         } catch (error) {
             Swal.fire({
                 icon: "error",
-                title: error.response.data.msg,
+                title: error.response.data.message,
             });
         }
     };
@@ -61,7 +61,7 @@ export default function Form_Login() {
             } catch (error) {
                 Swal.fire({
                     icon: "error",
-                    title: error.response.data.msg,
+                    title: error.response.data.message,
                 });
             }
         }

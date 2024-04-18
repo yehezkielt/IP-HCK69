@@ -22,6 +22,7 @@ router.get("/pub-category", CategoryController.pub_findAll);
 
 // Need authentication
 router.use(authentication)
+
 router.use("/shoes", shoes);
 router.use("/category", category);
 

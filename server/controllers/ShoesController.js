@@ -140,7 +140,7 @@ class ShoesController {
   }
   static async MidtransToken(req, res, next) {
     try {
-      const user = await User.findByPk(req.user.id);
+      const user = await User.findByPk(req.params.id);
       if (!user) throw { name: "id_not_found" };
 
       let snap = new midtransClient.Snap({

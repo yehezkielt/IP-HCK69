@@ -14,7 +14,7 @@ export default function Home_Page() {
     // Function to fetch shoes
     const fetchShoes = async (params) => {
         try {
-            const response = await axios.get(BASE_URL + "/shoes", { params });
+            const response = await axios.get(BASE_URL + "/pub-shoes", { params });
             setShoes(response.data);
         } catch (error) {
             console.error("Error fetching shoes:", error);
@@ -35,25 +35,34 @@ export default function Home_Page() {
     // Function to handle payment
     const Payment = async () => {
         try {
-            const { data } = await axios({
-                method: "post",
-                url: BASE_URL + `/shoes/payment/${id}`,
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("access_token"),
-                },
-            });
-            window.snap.pay(data.token, {
+            
+            // const { data } = await axios({
+            //     method: "post",
+            //     url: BASE_URL + `/payment/${id}`,
+            //     headers: {
+            //         Authorization: "Bearer " + localStorage.getItem("access_token"),
+            //     },
+            // });
+            // console.log(data);
+            window.snap.pay("data.token", {
                 onSuccess: function () {
                     Swal.fire({
                         icon: "success",
                         title: "Payment success",
                     });
                 },
+                onError: function () {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Payment server is busy",
+                    });
+                },
             });
         } catch (error) {
+            console.log(error.response.data.message);
             Swal.fire({
                 icon: "error",
-                title: error.response.data.msg,
+                title: "payment server is busy",
             });
         }
     };
@@ -85,7 +94,7 @@ export default function Home_Page() {
             </div>
             <div className="grid gap-4 lg:mt-20 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
                 {shoes.map((el) => (
-                    <Card el={el} key={el.id} />
+                    <Card el={el} key={el.id} Payment={Payment}/>
                 ))}
             </div>
             <div className="footer border mt-4 flex justify-center p-5">
