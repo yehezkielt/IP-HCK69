@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const BASE_URL = "https://iproject.tatang.online";
+// const BASE_URL = "https://iproject.tatang.online";
+const BASE_URL = "http://localhost:3000";
+
 
 export default function Form_Login() {
     const [email, setEmail] = useState("");
@@ -44,15 +46,19 @@ export default function Form_Login() {
     };
 
     useEffect(() => {
-        async function handleCredentialResponse({ credential }) {
-            const google_token = credential;
+        async function handleCredentialResponse(response) {
+            
             try {
-                const { data } = await axios.post(BASE_URL + "/google-login", {
-                    google_token,
+                const {data} = await axios({
+                    method: "post",
+                    url: BASE_URL + "/google-login", 
+                    headers: {
+                        google_token: response.credential
+                    }
                 });
 
                 localStorage.setItem("access_token", data.access_token);
-                localStorage.setItem("username", data.username);
+                // localStorage.setItem("username", data.username);
                 Swal.fire({
                     icon: "success",
                     title: "Signed in successfully",

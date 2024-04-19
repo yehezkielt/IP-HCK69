@@ -19,7 +19,7 @@ const errorHandler = (err, req, res, next) => {
             res.status(404).json({message: "Error not found"})
             break;
         case "InvalidToken":
-            res.status(401).json({message: "Invalid Token"})
+            res.status(401).json({message: "Invalid Token, please login first"})
             break;
         case "ImageIsRequired":
             res.status(401).json({message: "ImageUrl validation error"})

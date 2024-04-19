@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
-const BASE_URL = "https://iproject.tatang.online";
+// const BASE_URL = "https://iproject.tatang.online";
+const BASE_URL = "http://localhost:3000";
+
 
 export default function Shoes() {
     const { id } = useParams();
@@ -11,7 +13,13 @@ export default function Shoes() {
     // Function to fetch shoes
     const fetchShoes = async () => {
         try {
-            const response = await axios.get(BASE_URL + "/shoes");
+            const response = await axios({
+                method: "get",
+                url: BASE_URL + "/shoes/",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
+                },
+            });
             setShoes(response.data); // Update shoes state with fetched data
         } catch (error) {
             console.error("Error fetching shoes:", error);
@@ -25,7 +33,9 @@ export default function Shoes() {
     // Function to handle delete
     const handleDelete = async (shoeId) => {
         try {
-            await axios.delete(`${BASE_URL}/shoes/${shoeId}`, {
+            await axios({
+                method: "delete",
+                url: `${BASE_URL}/shoes/${shoeId}`,
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("access_token"),
                 },

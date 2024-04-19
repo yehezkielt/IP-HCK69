@@ -140,14 +140,17 @@ class ShoesController {
   }
   static async MidtransToken(req, res, next) {
     try {
-      const user = await User.findByPk(req.params.id);
-      if (!user) throw { name: "id_not_found" };
+        console.log("----");
+    //   const user = await User.findByPk(req.user.id);
+    //   if (!user) throw { name: "id_not_found" };
+    //   console.log(user);
 
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: process.env.SERVER_KEY,
       });
+      console.log("---------");
 
       let parameter = {
         transaction_details: {
@@ -158,12 +161,13 @@ class ShoesController {
           secure: true,
         },
         customer_details: {
-          email: user.email,
+          email: req.user.email,
         },
       };
 
       const midtransToken = await snap.createTransaction(parameter);
-      res.status(201).json({ midtransToken });
+      console.log(midtransToken);
+      res.status(201).json( midtransToken );
     } catch (error) {
       next(error);
     }

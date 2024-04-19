@@ -3,7 +3,8 @@ import Card from "../component/card";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-const BASE_URL = "https://iproject.tatang.online";
+const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "https://iproject.tatang.online";
 
 export default function Home_Page() {
     const [shoes, setShoes] = useState([]);
@@ -36,36 +37,43 @@ export default function Home_Page() {
     const Payment = async () => {
         try {
             
-            // const { data } = await axios({
-            //     method: "post",
-            //     url: BASE_URL + `/payment/${id}`,
-            //     headers: {
-            //         Authorization: "Bearer " + localStorage.getItem("access_token"),
-            //     },
-            // });
-            // console.log(data);
-            window.snap.pay("data.token", {
-                onSuccess: function () {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Payment success",
-                    });
-                },
-                onError: function () {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Payment server is busy",
-                    });
+            const { data } = await axios({
+                method: "post",
+                url: BASE_URL + `/shoes/payment/${id}`,
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("access_token"),
                 },
             });
+            console.log(data, data.token);
+            window.open(data.redirect_url, Swal.fire({
+                title: "Payment on progress",
+                icon: "success"
+            }))
+            
+            // window.snap.pay(data.token, {
+            //     onSuccess: function () {
+            //         Swal.fire({
+            //             icon: "success",
+            //             title: "Payment success",
+            //         });
+            //     },
+            //     onError: function () {
+            //         Swal.fire({
+            //             icon: "error",
+            //             title: "Payment server is busy",
+            //         });
+            //     },
+            // });
         } catch (error) {
-            console.log(error.response.data.message);
+            console.log(error.response);
             Swal.fire({
                 icon: "error",
                 title: "payment server is busy",
             });
         }
     };
+
+    
 
     // Function to handle search input change
     const handleSearchInputChange = (e) => {
@@ -94,7 +102,7 @@ export default function Home_Page() {
             </div>
             <div className="grid gap-4 lg:mt-20 justify-center sm:grid-cols-2 sm:mx-10 lg:grid-cols-3 lg:mx-24 xl:grid-cols-4 xl:mx-48">
                 {shoes.map((el) => (
-                    <Card el={el} key={el.id} Payment={Payment}/>
+                    <Card el={el} key={el.id} Payment={Payment} />
                 ))}
             </div>
             <div className="footer border mt-4 flex justify-center p-5">

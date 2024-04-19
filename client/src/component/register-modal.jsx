@@ -2,7 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-const BASE_URL = "https://iproject.tatang.online"
+// const BASE_URL = "https://iproject.tatang.online"
+const BASE_URL = "http://localhost:3000";
+
 
 export default function Form_Register() {
     const [input, setInput] = useState({

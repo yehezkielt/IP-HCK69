@@ -2,7 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-const BASE_URL = "https://iproject.tatang.online";
+// const BASE_URL = "https://iproject.tatang.online";
+const BASE_URL = "http://localhost:3000";
+
 
 export default function Form_Data() {
   const { id } = useParams();
@@ -15,24 +17,26 @@ export default function Form_Data() {
   const [price, setPrice] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
-  async function fetchShoeById() {
+  async function fetchShoesById() {
     try {
       const response = await axios.get(`${BASE_URL}/shoes/${id}`);
-      const shoe = response.data;
-      setName(shoe.name);
-      setDescription(shoe.description);
-      setPrice(shoe.price);
-      setCategoryId(shoe.CategoryId);
+      const shoes = response.data;
+      setName(shoes.name);
+      setDescription(shoes.description);
+      setPrice(shoes.price);
+      setCategoryId(shoes.CategoryId);
+      console.log(shoes);
     } catch (error) {
-      console.error("Error fetching shoe:", error);
+      console.error("Error fetching shoes:", error);
     }
   }
   // Fetch shoe data by ID if editing
   useEffect(() => {
     if (id) {
-      fetchShoeById();
+      fetchShoesById();
     }
   }, [id]);
+
 
   // Handle file input change
   const handleFileChange = (e) => {
@@ -59,6 +63,7 @@ export default function Form_Data() {
       default:
         break;
     }
+    
   };
 
   // Handle form submission
@@ -85,7 +90,9 @@ export default function Form_Data() {
         url = `${BASE_URL}/shoes`;
       }
 
-      const response = await axios(method, url, {
+      const response = await axios({
+        method, 
+        url, 
         data: formData,
         headers: {
           Authorization: "Bearer " + localStorage.getItem("access_token"),

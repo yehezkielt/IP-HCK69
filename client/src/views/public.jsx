@@ -3,7 +3,9 @@ import Card from "../component/card";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-const BASE_URL = "https://iproject.tatang.online";
+// const BASE_URL = "https://iproject.tatang.online";
+const BASE_URL = "http://localhost:3000";
+
 
 export default function Public() {
     const [pubShoes, setPubShoes] = useState([]);
