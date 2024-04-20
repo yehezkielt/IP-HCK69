@@ -11,16 +11,6 @@ import Form_Data from "./views/form_data";
 import Public from "./views/public";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <MainLayout />,
-        children: [
-            {
-                path: '/',
-                element: <Public />,
-            }
-        ]
-    },
 	{
 		element: <MainLayout />,
 		loader: () => {
@@ -30,6 +20,10 @@ const router = createBrowserRouter([
 			return redirect("/");
 		},
 		children: [
+			{
+				path: "/",
+				element: <Public />,
+			},
 			{
 				path: "/home",
 				element: <Home_Page />,
