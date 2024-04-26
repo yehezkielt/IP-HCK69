@@ -3,8 +3,8 @@ import Card from "../component/card";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-const BASE_URL = "http://localhost:3000";
-// const BASE_URL = "https://iproject.tatang.online";
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://iproject.tatang.online";
 
 export default function Home_Page() {
     const [shoes, setShoes] = useState([]);
